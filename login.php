@@ -1,6 +1,16 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['account']) && isset($_SERVER['HTTP_COOKIE'])) {
+    $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+    foreach($cookies as $cookie) {
+        $parts = explode('=', $cookie);
+        $name = trim($parts[0]);
+        setcookie($name, '', 1);
+        setcookie($name, '', 1, '/');
+    }
+}
+
 if (isset($_POST['account']) && isset($_POST['pw'])) {
     if ($_POST['account'] == 'member' && $_POST['pw'] == 'member123456') {
         $_SESSION['account'] = $_POST['account'];
@@ -29,6 +39,7 @@ if (isset($_POST['account']) && isset($_POST['pw'])) {
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/localization/messages_zh_TW.js "></script>
 
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/cart.css" rel="stylesheet">
     <script src="js/script.js"></script>
     <script>
         $(document).ready(function($) {
@@ -118,7 +129,7 @@ if (isset($_POST['account']) && isset($_POST['pw'])) {
                         <form class="form-horizontal" role="form" id="form1" action="" method="POST">
                             <div class="form-group logbox">
                                 <h2>會員登入</h2>
-                                <br><br><br><br>
+                                <br><br><br>
                                 <h4 class="control-label">帳號</h4>
                                 <input type="text" class="form-inline textbox" id="account" name="account">
                                 <label for="account" class="error"></label>

@@ -1,9 +1,21 @@
 <?php
+if (!isset($_GET['id'])) {
+    header("Location:index.php");
+    exit();
+}
 $link = mysqli_connect("localhost", "root", "root123456", "group_07") or die("無法開啟MySQL資料庫連結!<br>");
 mysqli_query($link, 'SET CHARACTER SET utf8');
 mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
 
 if ($result = mysqli_query($link, 'SELECT isbn, book_name,full_name, eng_name, author, translator, press, publish_date, lang, category, spec, content_intro, author_intro, index_intro, preface_intro, price, sales FROM book where isbn = ' . $_GET["id"])) {
+    if ($result->num_rows <= 0) {
+        mysqli_free_result($result);
+        mysqli_close($link);
+        echo "<script type='text/javascript'>alert('無此商品!');
+        window.location.href='index.php';
+        </script>";
+        exit();
+    }
     $row = mysqli_fetch_assoc($result);
     mysqli_free_result($result);
 }
@@ -27,6 +39,7 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/cart.css" rel="stylesheet">
     <script src="js/script.js"></script>
     <style>
 
@@ -71,7 +84,7 @@ session_start();
                 <div class="row" style="margin-top: 2%;">
                     <div class="col-5">
                         <div class="box">
-                            <img class="boximg" src="images/<?php echo $row["isbn"] ?>.jpg"></a>
+                            <img class="boximg" src="images/<?php echo $row["isbn"] ?>.jpg">
                         </div>
                     </div>
                     <div class="col-7">
@@ -88,7 +101,7 @@ session_start();
                         <hr>
                         <h6>定價:&nbsp;&nbsp;<?php echo '<span style="color: brown; font-weight: bold;">'.$row["price"].'</span>'; ?></h6>
                         <br>
-                        <a href="cart.php?id=<?php echo $row['isbn']; ?>"><p><button class="boxbutton">放入購物車</button></p></a>
+                        <a style="width:30%; display:block;" href="addcart.php?id=<?php echo $row['isbn']; ?>&op=1"><p><button class="boxbutton">放入購物車</button></p></a>
                     </div>
                 </div>
                 <div class="row">

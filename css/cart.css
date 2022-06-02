@@ -1,0 +1,60 @@
+@media only screen and (min-width: 1000px) {
+    .listlink,
+    .listlink:hover,
+    .listlink:visited,
+    .listlink:link,
+    .listlink:active {
+        font-size: 22px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .listlink,
+    .listlink:hover,
+    .listlink:visited,
+    .listlink:link,
+    .listlink:active {
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1400px) {
+
+}
+
+.list {
+    padding-top: 3%;
+    padding-bottom: 2%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 2px;
+}
+
+.listimg {
+    width: 90%;
+    max-width: 200px;
+    
+    margin-bottom: 2%;
+    margin-top: 1%;
+}
+
+.addbt {
+    border: none;
+    padding: 8px 18px;
+    background-color: lightgray;
+    font-size: large;
+}
+
+.rmbt {
+    padding: 4px 12px;
+}
+
+.listlink,
+.listlink:hover,
+.listlink:visited,
+.listlink:link,
+.listlink:active {
+    text-decoration: none;
+    text-align: left;
+    color: black;
+}

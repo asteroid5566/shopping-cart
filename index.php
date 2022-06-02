@@ -4,20 +4,6 @@ session_start();
 $link = mysqli_connect("localhost", "root", "root123456", "group_07") or die("無法開啟MySQL資料庫連結!<br>");
 mysqli_query($link, 'SET CHARACTER SET utf8');
 mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
-
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = Array();
-}
-
-// if (isset($_GET['id'])) {
-//     $id = $_GET['id'];
-
-//     if (!in_array($id,$_SESSION['cart'])){
-//         $_SESSION['cart'][]=$id;
-//     }
-//     $url = $_SERVER['HTTP_REFERER'];
-//     header("Location:$url");
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +21,7 @@ if (!isset($_SESSION['cart'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/cart.css" rel="stylesheet">
     <script src="js/script.js"></script>
     <style>
 
@@ -91,7 +78,6 @@ if (!isset($_SESSION['cart'])) {
                                         <h5>' . $row['book_name'] . '</h5>
                                     </a>
                                     <p class="price">$' . $row['price'] . '</p>';
-                                    //<a href="index.php?id=' . $row["isbn"] . '"><p><button>放入購物車</button></p></a>
                                 echo '</div>
                             </div>';
                         }

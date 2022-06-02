@@ -2,7 +2,7 @@
 echo '
         <div class="row" style="margin-top: 1%;">
             <div class="col-12 bg-dark text-center text-white" style="padding:0px;">
-                <div class="row" style="margin-top: 6%; margin-bottom: 3%">
+                <div class="row" style="margin-top: 4%; margin-bottom: 1%">
                     <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
                         <h4 class="text-uppercase">素材來源</h4>
                         <hr style="width:30%; background-color: white;">

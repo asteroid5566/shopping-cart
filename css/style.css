@@ -16,6 +16,18 @@ body {
             } */
 }
 
+@media screen and (min-width: 901px) and (max-width: 1000px) {
+    h5 {
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1400px) {
+    h5 {
+        font-size: 16px;
+    }
+}
+
 #topbtn {
     display: none;
     position: fixed;
@@ -125,7 +137,7 @@ h4 {
 
 .price {
     color: brown;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     margin-top: 5px;
 }
@@ -182,11 +194,13 @@ h4 {
     border: none;
     outline: 0;
     padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     color: white;
     background-color: #000;
     text-align: center;
     cursor: pointer;
-    width: 22%;
+    width: 100%;
     font-size: 14px;
 }
 
