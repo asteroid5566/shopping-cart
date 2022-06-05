@@ -8,16 +8,13 @@ echo '
                         <hr style="width:30%; background-color: white;">
                         <ul class="list-unstyled mb-0" style="padding-bottom: 10px;">
                             <li>
-                                <a href="https://www.books.com.tw/" class="text-white">博客來</a>
+                                <a href="https://www.books.com.tw/" target="_blank" class="text-white">博客來</a>
                             </li>
                             <li>
-                                <a href="https://www.taaze.tw/index.html" class="text-white">TAAZE</a>
+                                <a href="https://www.taaze.tw/index.html" target="_blank" class="text-white">TAAZE</a>
                             </li>
                             <li>
-                                <a href="https://www.w3schools.com/" class="text-white">W3schools</a>
-                            </li>
-                            <li>
-                                <a href="https://www.flaticon.com/" class="text-white">flaticon</a>
+                                <a href="https://www.flaticon.com/" target="_blank" class="text-white">flaticon</a>
                             </li>
                         </ul>
                     </div>

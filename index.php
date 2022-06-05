@@ -14,18 +14,7 @@ mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>書城</title>
     <link rel="shortcut icon" type="image/png" href="images/icon.png?">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/cart.css" rel="stylesheet">
-    <script src="js/script.js"></script>
-    <style>
-
-    </style>
+    <?php include("import.php");?>
 </head>
 
 <body>
@@ -56,17 +45,7 @@ mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
             </div>
             <div class="col-12 col-lg-10">
                 <div class="row">
-                    <div class="col-12" style="background-color:#EEEEEE; height: 48px; padding-left: 2%; margin-bottom: 1%;">
-                        <input type="text" class="form" style="margin-top: 10px; border: 2px #04AA60 solid;">
-                        <button class="btn btn-primary btn-sm" style="vertical-align: top; margin-top: 9px; background-color:#04AA60">搜尋</button>
-                        <span style="margin-left: 8px;">
-                            <span style="margin-right: 6px;">熱門關鍵字:</span>
-                            <a href="" style="margin-right: 4px;">輕小說</a>
-                            <a href="" style="margin-right: 4px;">PHP</a>
-                            <a href="" style="margin-right: 4px;">多益</a>
-                            <a href="" style="margin-right: 4px;">計算機組織</a>
-                        </span>
-                    </div>
+                    <?php include("searchbar.php"); ?>
                     <?php
                     if ($result = mysqli_query($link, 'SELECT isbn, book_name,full_name, eng_name, author, translator, press, publish_date, lang, category, spec, content_intro, author_intro, index_intro, preface_intro, price, sales FROM book ORDER BY rand()')) {
                         while ($row = mysqli_fetch_assoc($result)) {

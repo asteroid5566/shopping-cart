@@ -1,19 +1,12 @@
 <?php
+//todo
 session_start();
+
 if (isset($_SESSION['account'])) {
     header("Location:index.php");
     exit();
 }
 
-if (!isset($_SESSION['account']) && isset($_SERVER['HTTP_COOKIE'])) {
-    $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
-    foreach($cookies as $cookie) {
-        $parts = explode('=', $cookie);
-        $name = trim($parts[0]);
-        setcookie($name, '', 1);
-        setcookie($name, '', 1, '/');
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,9 +93,9 @@ if (!isset($_SESSION['account']) && isset($_SERVER['HTTP_COOKIE'])) {
                 </div>
                 <div class="row">
                     <div class="col-12" style="padding-left: 10px; padding-right:2px;">
-                        <form class="form-horizontal" role="form" id="form1" action="login_verify.php" method="POST">
+                        <form class="form-horizontal" role="form" id="form1" action="" method="POST">
                             <div class="form-group logbox">
-                                <h2 style="text-align:center; text-decoration:underline; text-underline-position: under;">會員登入</h2>
+                                <h2 style="text-align:center; text-decoration:underline; text-underline-position: under;">重設密碼</h2>
                                 <br><br><br>
                                 <h4 class="control-label">帳號</h4>
                                 <input type="text" class="form-inline textbox" id="account" name="account">
@@ -117,8 +110,6 @@ if (!isset($_SESSION['account']) && isset($_SERVER['HTTP_COOKIE'])) {
                                 <br><br><br>
                                 <button type="submit" class="btn btn-primary">登  入</button>&nbsp;&nbsp;
                                 <button type="reset" class="btn btn-danger">清  除</button>
-                                &nbsp;
-                                <a href="reset.php"><button type="button" class="btn btn-warning">忘記密碼?</button><a>
                             </div>
                         </form>
                     </div>

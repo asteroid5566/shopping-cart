@@ -12,9 +12,9 @@ echo '
 
                 <a href="cart.php" style="float:right">購物車&nbsp;<span style="color:red; font-weight:bold;">('.$_SESSION['cnt'].')</span></a>';
                 if (!isset($_SESSION['account']))
-                    echo '<a href="#" style="float:right">會員註冊</a>';
+                    echo '<a href="register.php" style="float:right">會員註冊</a>';
                 else
-                    echo '<a href="#" style="float:right">會員中心</a>';
+                    echo '<a href="member.php" style="float:right">會員中心</a>';
 
                 if (isset($_SESSION['account']))
                     echo '<a href="logout.php" style="float:right">登出</a>';

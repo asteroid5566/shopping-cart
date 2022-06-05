@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['account'])) {
-    header("Location:login.php");
+if (!isset($_GET['keyword']) || $_GET['keyword'] == "") {
+    header("Location:index.php");
     exit();
 }
 ?>
@@ -47,54 +47,31 @@ if (!isset($_SESSION['account'])) {
                 mysqli_query($link, 'SET CHARACTER SET utf8');
                 mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
              
-                $arr = Array();
-                $flag = false;
-                foreach ($_COOKIE as $key=>$val) {
-                    if (substr($key, -4) == "ISBN") {
-                        $flag = true;
-                        $arr[] = substr($key, 0, -4);
+                if ($result = mysqli_query($link, 'SELECT isbn, book_name, full_name, eng_name, author, category, spec, content_intro, author_intro, index_intro, preface_intro, price, sales FROM book where book_name like "%'.$_GET['keyword'].'%"')) {
+                    if (mysqli_num_rows($result) == 0) {
+                        echo '<div style="margin-left: 4%; margin-top: 4%;" class="control-label">找不到相關資料，換個關鍵字吧&nbsp;!</div>';
                     }
-                }
-                $in = '(' . implode(',', $arr) .')';
-                if (!$flag) {
-                    echo "<script type='text/javascript'>alert('購物車內還沒有東西喔!');
-                    window.location.href='index.php';
-                    </script>";
-                }
-                else if ($result = mysqli_query($link, 'SELECT isbn, book_name, full_name, eng_name, author, category, spec, content_intro, author_intro, index_intro, preface_intro, price, sales FROM book where isbn IN '.$in)) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo '
-                        <div class="row list" style="margin-top: 2%; max-height: 50%;">
+                        <div class="row list" style="margin-top: 2%; max-height: 40%;">
                             <div class="col-3">
-                                <a href="products.php?id='.$row["isbn"].'">
-                                    <img class="listimg" src="images/'.$row["isbn"].'.jpg">
+                                <a style="display:block;" href="products.php?id='.$row["isbn"].'">
+                                    <img style="max-height: 140px; width:auto;" src="images/'.$row["isbn"].'.jpg">
                                 </a>
                             </div>
                             <div class="col-4">
                                 <a class="listlink" href="products.php?id='.$row["isbn"].'">
                                     <p class="listlink">'.$row["full_name"].'</p>
                                 </a>
-                                <div>
-                                    <span>定價:&nbsp;&nbsp;<span style="color: brown; font-weight: bold;">'.$row["price"].'</span></span>
-                                </div>
-                                <br>
                             </div>
-                            <div class="col-5" style="padding-top:14%;">
-                                <a class="cardlink" href="addcart.php?id='.$row['isbn'].'&op=2">
-                                    <button class="addbt">-</button>
-                                </a>
-                                <span class="price">&nbsp;&nbsp;&nbsp;'.$_COOKIE[$row["isbn"]."ISBN"].'&nbsp;&nbsp;&nbsp;</span>
-                                <a class="cardlink" href="addcart.php?id='.$row['isbn'].'&op=1">
-                                    <button class="addbt">+</button>
-                                </a>
-                                <a href="addcart.php?id='.$row['isbn'].'&op=3">
-                                    <button class="btn-danger btn-lg rmbt" style="margin-left: 20px;">刪除</button>
-                                </a>
+                            <div class="col-4">
+                                <span >定價:&nbsp;&nbsp;<span style="color: brown; font-weight: bold; font-size:20px;">'.$row["price"].'</span></span>
+                                <a style="width:50%; display: block; margin-left: 36%; margin-top:20%;" href="addcart.php?id='.$row['isbn'].'&op=1"><p><button class="boxbutton">放入購物車</button></p></a>
                             </div>
                         </div>';
                     }
-                    mysqli_free_result($result);
                 }
+                mysqli_free_result($result);
                 mysqli_close($link);
                 ?>
             </div>
