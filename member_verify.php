@@ -17,7 +17,8 @@ $phone = $_POST['phone'];
 $question = $_POST['question'];
 $answer = $_POST['answer'];
 
-// $sql = 'UPDATE user SET "pw"="'.$_POST['pwd'].'","user_name"="'.$_POST['name'].'","email"="'.$_POST['email'].'","phone"="'.$_POST['phone'].'","question"="'.$_POST['question'].'","answer"="'.$_POST['answer'].'" WHERE "account" = "'.$_SESSION['account'].'"';
+//$sql = 'UPDATE user SET "pw"="'.$_POST['pwd'].'","user_name"="'.$_POST['name'].'","email"="'.$_POST['email'].'","phone"="'.$_POST['phone'].'","question"="'.$_POST['question'].'","answer"="'.$_POST['answer'].'" WHERE "account" = "'.$_SESSION['account'].'"';
+
 $sql = "UPDATE user SET pw='$pw', user_name='$name', email='$email', phone='$phone', question='$question', answer='$answer' WHERE account = '$account'";
 
 mysqli_query($link, $sql)or die(mysqli_error($link));

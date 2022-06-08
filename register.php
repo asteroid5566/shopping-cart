@@ -138,7 +138,7 @@ $_SESSION['checkaccount'] = 0;
                                     <tr>
                                         <td class="control-label" width='50' style="font-size:12pt">帳號:</td>
                                         <td width='400'>
-                                            <input type="text" name="p_usr" id="p_usr" maxLength="12" onkeyup=sendRequest();>
+                                            <input type="text" name="p_usr" id="p_usr" maxLength="12" placeholder="6至12個字元" onkeyup=sendRequest();>
                                             <label for="p_user" class="error"></label>
                                         </td>
                                     </tr>

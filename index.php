@@ -48,6 +48,7 @@ mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
                     <?php include("searchbar.php"); ?>
                     <?php
                     if ($result = mysqli_query($link, 'SELECT isbn, book_name,full_name, eng_name, author, translator, press, publish_date, lang, category, spec, content_intro, author_intro, index_intro, preface_intro, price, sales FROM book ORDER BY rand()')) {
+                        $count = 0;
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo '
                             <div class="col-sm-12 col-md-6 col-lg-3">
@@ -59,6 +60,9 @@ mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
                                     <p class="price">$' . $row['price'] . '</p>';
                                 echo '</div>
                             </div>';
+                            $count++;
+                            if ($count > 15)
+                                break;
                         }
                         mysqli_free_result($result);
                     }

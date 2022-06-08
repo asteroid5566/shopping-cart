@@ -1,5 +1,4 @@
 <?php
-//todo
 session_start();
 
 if (isset($_SESSION['account'])) {
@@ -33,18 +32,12 @@ if (isset($_SESSION['account'])) {
                     account: {
                         required: true,
                     },
-                    pwd: {
-                        required: true,
-                    },
                     agree: {
                         required: true
                     },
                 },
                 messages: {
                     account: {
-                        required: "不得為空",
-                    },
-                    pwd: {
                         required: "不得為空",
                     },
                     agree: {
@@ -93,7 +86,7 @@ if (isset($_SESSION['account'])) {
                 </div>
                 <div class="row">
                     <div class="col-12" style="padding-left: 10px; padding-right:2px;">
-                        <form class="form-horizontal" role="form" id="form1" action="" method="POST">
+                        <form class="form-horizontal" role="form" id="form1" action="reset_check.php" method="POST">
                             <div class="form-group logbox">
                                 <h2 style="text-align:center; text-decoration:underline; text-underline-position: under;">重設密碼</h2>
                                 <br><br><br>
@@ -101,14 +94,10 @@ if (isset($_SESSION['account'])) {
                                 <input type="text" class="form-inline textbox" id="account" name="account">
                                 <label for="account" class="error"></label>
                                 <br><br>
-                                <h4 class="control-label">密碼</h4>
-                                <input type="password" class="form-inline textbox" id="pwd" name="pwd">
-                                <label for="pwd" class="error"></label>
-                                <br><br>
                                 <input type="checkbox" id="agree" name="agree">&nbsp;我不是機器人
                                 <label class="error" for="agree"></label>
                                 <br><br><br>
-                                <button type="submit" class="btn btn-primary">登  入</button>&nbsp;&nbsp;
+                                <button type="submit" class="btn btn-primary">確 認</button>&nbsp;&nbsp;
                                 <button type="reset" class="btn btn-danger">清  除</button>
                             </div>
                         </form>
