@@ -1,11 +1,22 @@
 <?php
 session_start();
-if (isset($_SESSION['account'])) {
-    header("Location:index.php");
+if (!isset($_SESSION['account'])) {
+    header("Location:login.php");
     exit();
 }
 
-$_SESSION['checkaccount'] = 0;
+$user = $_SESSION['account'];
+$link = mysqli_connect("localhost", "root", "root123456", "group_07") or die("無法開啟MySQL資料庫連結!<br>");
+mysqli_query($link, 'SET CHARACTER SET utf8');
+mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
+
+$sql = "SELECT * FROM user where account='$user'";
+
+if ($result = mysqli_query($link, $sql)) {
+    if ($row = mysqli_fetch_assoc($result))
+        mysqli_free_result($result);
+}
+mysqli_close($link);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,19 +29,6 @@ $_SESSION['checkaccount'] = 0;
     <link rel="shortcut icon" type="image/png" href="images/icon.png?">
     <?php include("import.php"); ?>
     <script>
-        function sendRequest() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    if (this.responseText == 1) document.getElementById('show_msg').innerHTML = '此帳號已存在，請嘗試其他組合';
-                    else document.getElementById('show_msg').innerHTML = '';
-                }
-            };
-            var url = 'register_check.php?p_usr=' + document.form1.p_usr.value + '&timeStamp=' + new Date().getTime();
-            xhttp.open('GET', url, true);
-            xhttp.send();
-        }
-
         $(document).ready(function($) {
             $.validator.addMethod("notEqualsto", function(value, element, arg) {
                 return arg != value;
@@ -59,9 +57,6 @@ $_SESSION['checkaccount'] = 0;
                     answer: {
                         required: true
                     },
-                    agree: {
-                        required: true
-                    },
                 },
                 messages: {
                     p_usr: {
@@ -80,9 +75,6 @@ $_SESSION['checkaccount'] = 0;
                     },
                     answer: {
                         required: "不得為空",
-                    },
-                    agree: {
-                        required: "你是機器人?!",
                     },
                 }
             });
@@ -113,9 +105,9 @@ $_SESSION['checkaccount'] = 0;
                 </div>
                 <div class="row">
                     <div class="col-12" style="padding-left: 10px; padding-right:2px;">
-                        <form class="form-horizontal" id="form1" name="form1" action="register_verify.php" method="POST">
+                        <form class="form-horizontal" id="form1" name="form1" action="member_verify.php" method="POST">
                             <div class="form-group logbox">
-                                <h2 style="margin-right:2%;text-align:center; text-decoration:underline; text-underline-position: under;">會員註冊</h2>
+                                <h2 style="margin-right:2%;text-align:center; text-decoration:underline; text-underline-position: under;">會員資料更改</h2>
                                 <br>
                                 <table cellspacing="2" cellpadding="10" align=center>
                                     <tr>
@@ -124,35 +116,35 @@ $_SESSION['checkaccount'] = 0;
                                     <tr>
                                         <td class="control-label" width='50' style="font-size:12pt">帳號:</td>
                                         <td width='400'>
-                                            <input type="text" name="p_usr" id="p_usr" maxLength="12" placeholder="6至12個字元" onkeyup=sendRequest();>
+                                            <input type="text" name="p_usr" id="p_usr" maxLength="12" disabled placeholder="<?php echo $row['account'];?>">
                                             <label for="p_user" class="error"></label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="control-label" width='50'>密碼:</td>
                                         <td width='400'>
-                                            <input type="password" name="pwd" id="pwd" maxLength="12" placeholder="6至12個字元">
+                                            <input type="password" name="pwd" id="pwd" maxLength="12" value="<?php echo $row['pw'];?>">
                                             <label for="pwd" class="error"></label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="control-label" width='50'>姓名:</td>
                                         <td width='400'>
-                                            <input type="text" name="name" id="name" maxLength="12" placeholder="可免填">
+                                            <input type="text" name="name" id="name" maxLength="12" placeholder="可免填" value="<?php echo $row['user_name'];?>">
                                             <label for="name" class="error"></label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="control-label" width='50'>email:</td>
                                         <td width='400'>
-                                            <input type="text" name="email" id="email" maxLength="30" placeholder="可免填">
+                                            <input type="text" name="email" id="email" maxLength="30" placeholder="可免填" value="<?php echo $row['email'];?>">
                                             <label for="email" class="error"></label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="control-label" width='50'>電話:</td>
                                         <td width='400'>
-                                            <input type="text" name="phone" id="phone" maxLength="12" placeholder="可免填">
+                                            <input type="text" name="phone" id="phone" maxLength="12" placeholder="可免填" value="<?php echo $row['phone'];?>">
                                             <label for="phone" class="error"></label>
                                         </td>
                                     </tr>
@@ -164,7 +156,7 @@ $_SESSION['checkaccount'] = 0;
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <input type="text" name="question" id="question" size="30" maxlength="30" placeholder="最多30字(例如: 您就讀哪間高中?)">
+                                            <input type="text" name="question" id="question" size="30" maxlength="30" placeholder="最多30字(例如: 您就讀哪間高中?)" value="<?php echo $row['question'];?>">
                                             <label for="question" class="error"></label>
                                         </td>
                                     </tr>
@@ -173,24 +165,17 @@ $_SESSION['checkaccount'] = 0;
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <input type="text" name="answer" id="answer" size="30" maxlength="30" placeholder="最多30字">
+                                            <input type="text" name="answer" id="answer" size="30" maxlength="30" placeholder="最多30字" value="<?php echo $row['answer'];?>">
                                             <label for="answer" class="error"></label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">&nbsp;</td>
                                     </tr>
-                                    <tr>
-                                        <td width='100'></td>
-                                        <td class="control-label" width='400' style="text-align: center; padding-right: 20%;">
-                                            <input type="checkbox" id="agree" name="agree">&nbsp;我不是機器人
-                                            <label class="error" for="agree"></label>
-                                        </td>
-                                    </tr>
                                 </table>
                                 <br>
                                 <button type="submit" class="btn btn-primary">送 出</button>&nbsp;&nbsp;
-                                <button type="reset" class="btn btn-danger">清 除</button>
+                                <button type="reset" class="btn btn-danger">復 原</button>
                             </div>
                         </form>
                     </div>

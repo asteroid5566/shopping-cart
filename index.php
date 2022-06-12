@@ -28,46 +28,54 @@ mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
             </div>
         </div>
         <div class="row" style="margin-top: 1%;">
-            <div class="col-2 d-none d-lg-block" style="padding: 0px; border: 5px lightgray solid; border-top: 6px #04AA60 solid;">
-                <div class="categorybox">
-                    <p class="category" style="margin-top: 4%; margin-right: 10%; text-align: center; color: brown; padding-bottom: 0px;">
-                        全站分類</p>
-                </div>
-                <a href="" class="category">商業/財經</a>
-                <a href="" class="category">醫療/健康</a>
-                <a href="" class="category">文學/哲學</a>
-                <a href="" class="category">科學/科技</a>
-                <a href="" class="category">語言/學習</a>
-                <a href="" class="category">旅遊/生活</a>
-                <a href="" class="category">社會/人文</a>
-                <a href="" class="category">電腦/資訊</a>
-                <a href="" class="category">漫畫/輕小說</a>
-            </div>
+            <?php include("sidebar.php"); ?>
             <div class="col-12 col-lg-10">
                 <div class="row">
-                    <?php include("searchbar.php"); ?>
-                    <?php
-                    if ($result = mysqli_query($link, 'SELECT isbn, book_name,full_name, eng_name, author, translator, press, publish_date, lang, category, spec, content_intro, author_intro, index_intro, preface_intro, price, sales FROM book ORDER BY rand()')) {
-                        $count = 0;
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo '
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <div class="card">
-                                    <a href="products.php?id=' . $row["isbn"] . '" class="cardlink">
-                                        <img class="cardimg" src="images/' . $row["isbn"] . '.jpg">
-                                        <h5>' . $row['book_name'] . '</h5>
-                                    </a>
-                                    <p class="price">$' . $row['price'] . '</p>';
-                                echo '</div>
-                            </div>';
-                            $count++;
-                            if ($count > 15)
+                    <?php include("searchbar.php"); 
+
+                    if ($result = mysqli_query($link, 'SELECT * FROM book ORDER BY publish_date')) {
+                        if (!isset($_GET['page']))
+                            $page = 1;
+                        else
+                            $page = $_GET['page'];
+
+                        $page_num = ceil(mysqli_num_rows($result)/8);
+                        mysqli_data_seek($result, ($page - 1) * 8);
+                        
+                        for ($i = 0; $i < 8; $i++) {
+                            if ($row = mysqli_fetch_assoc($result)) {
+                                echo '
+                                <div class="col-sm-12 col-md-6 col-lg-3">
+                                    <div class="card">
+                                        <a href="products.php?id=' . $row["isbn"] . '" class="cardlink">
+                                            <img class="cardimg" src="images/' . $row["isbn"] . '.jpg">
+                                            <h5>' . $row['book_name'] . '</h5>
+                                        </a>
+                                        <p class="price">$' . $row['price'] . '</p>';
+                                    echo '</div>
+                                </div>';
+                            }
+                            else
                                 break;
                         }
                         mysqli_free_result($result);
                     }
                     mysqli_close($link);
                     ?>
+                </div>
+                <div class="row">
+                    <div class="col-12" style="text-align:center; padding:4%; font-weight:bold;">
+                        <?php
+                            $str = "";
+                            for ($i = 1; $i <= $page_num; $i++) {
+                                if ($i == $page)
+                                    $str = $str."&nbsp;&nbsp;". $i . "&nbsp;&nbsp;&nbsp;&nbsp;";
+                                else
+                                    $str .= "<a href='".$_SERVER['PHP_SELF']."?page=$i'><button class='addbt' style='font-weight:bold;'>$i</button></a>&nbsp;&nbsp;";
+                            }
+                            echo $str;
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>

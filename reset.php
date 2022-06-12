@@ -65,21 +65,7 @@ if (isset($_SESSION['account'])) {
         <?php include("topnav.php"); ?>
 
         <div class="row" style="margin-top: 1%;">
-            <div class="col-2 d-none d-lg-block" style="padding: 0px; border: 5px lightgray solid; border-top: 6px #04AA60 solid;">
-                <div class="categorybox">
-                    <p class="category" style="margin-top: 4%; margin-right: 10%; text-align: center; color: brown; padding-bottom: 0px;">
-                        全站分類</p>
-                </div>
-                <a href="" class="category">商業/財經</a>
-                <a href="" class="category">醫療/健康</a>
-                <a href="" class="category">文學/哲學</a>
-                <a href="" class="category">科學/科技</a>
-                <a href="" class="category">語言/學習</a>
-                <a href="" class="category">旅遊/生活</a>
-                <a href="" class="category">社會/人文</a>
-                <a href="" class="category">電腦/資訊</a>
-                <a href="" class="category">漫畫/輕小說</a>
-            </div>
+            <?php include("sidebar.php"); ?>
             <div class="col-12 col-lg-10">
                 <div class="row">
                     <?php include("searchbar.php"); ?>

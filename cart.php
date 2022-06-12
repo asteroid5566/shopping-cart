@@ -23,21 +23,7 @@ if (!isset($_SESSION['account'])) {
     <div class="container-fulid">
         <?php include("topnav.php"); ?>
         <div class="row" style="margin-top: 1%;">
-            <div class="col-2 d-none d-lg-block" style="padding: 0px; border: 5px lightgray solid; border-top: 6px #04AA60 solid;">
-                <div class="categorybox">
-                    <p class="category" style="margin-top: 4%; margin-right: 10%; text-align: center; color: brown; padding-bottom: 0px;">
-                        全站分類</p>
-                </div>
-                <a href="" class="category">商業/財經</a>
-                <a href="" class="category">醫療/健康</a>
-                <a href="" class="category">文學/哲學</a>
-                <a href="" class="category">科學/科技</a>
-                <a href="" class="category">語言/學習</a>
-                <a href="" class="category">旅遊/生活</a>
-                <a href="" class="category">社會/人文</a>
-                <a href="" class="category">電腦/資訊</a>
-                <a href="" class="category">漫畫/輕小說</a>
-            </div>
+            <?php include("sidebar.php"); ?>
             <div class="col-12 col-lg-10">
                 <div class="row">
                     <?php include("searchbar.php"); ?>
@@ -61,7 +47,7 @@ if (!isset($_SESSION['account'])) {
                     window.location.href='index.php';
                     </script>";
                 }
-                else if ($result = mysqli_query($link, 'SELECT isbn, book_name, full_name, eng_name, author, category, spec, content_intro, author_intro, index_intro, preface_intro, price, sales FROM book where isbn IN '.$in)) {
+                else if ($result = mysqli_query($link, 'SELECT * FROM book where isbn IN '.$in)) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo '
                         <div class="row list" style="margin-top: 2%; max-height: 50%;">
@@ -96,6 +82,20 @@ if (!isset($_SESSION['account'])) {
                     mysqli_free_result($result);
                 }
                 mysqli_close($link);
+
+                echo '
+                <br>
+                <form action="order.php" method="POST">
+                    <table style="width:100%;">
+                        <tr><td><br></td></tr>
+                        <tr>
+                            <td width="50%"><h4 style="text-align:right;">總金額: <span style="color:red;">'.$_SESSION['cost'].'</span></h4></td>
+                            <td width="50%" align="center"><button type="submit" class="btn btn-primary">結 帳</button></td>
+                        </tr>
+                        <tr><td><br></td></tr>
+                    </table>
+                </form>
+                ';
                 ?>
             </div>
         </div>

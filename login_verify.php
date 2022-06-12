@@ -18,6 +18,7 @@ if ($result = mysqli_query($link, $sql)) {
         if ($pw == $row['pw']) {
             $_SESSION['account'] = $user;
             $_SESSION['level'] = $row['level'];
+            $_SESSION['cost'] = 0;
             header("Location:index.php");
             exit();
         } else {
