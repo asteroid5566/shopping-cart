@@ -1,8 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION['account'])) {
-    header("Location:index.php");
-    exit();
+    if (!(isset($_SESSION['level']) && $_SESSION['level'] >= 9)) {
+        header("Location:index.php");
+        exit();
+    }
 }
 
 $_SESSION['checkaccount'] = 0;

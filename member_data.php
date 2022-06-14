@@ -5,7 +5,11 @@ if (!isset($_SESSION['account'])) {
     exit();
 }
 
-$user = $_SESSION['account'];
+if (isset($_GET['id']))
+    $user = $_GET['id'];
+else
+    $user = $_SESSION['account'];
+
 $link = mysqli_connect("localhost", "root", "root123456", "group_07") or die("無法開啟MySQL資料庫連結!<br>");
 mysqli_query($link, 'SET CHARACTER SET utf8');
 mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
@@ -25,7 +29,7 @@ mysqli_close($link);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>會員註冊</title>
+    <title>會員資料更改</title>
     <link rel="shortcut icon" type="image/png" href="images/icon.png?">
     <?php include("import.php"); ?>
     <script>
@@ -114,7 +118,9 @@ mysqli_close($link);
                                         <td colspan="2"><span id='show_msg' style="color:red"></span></td>
                                     </tr>
                                     <tr>
-                                        <td class="control-label" width='50' style="font-size:12pt">帳號:</td>
+                                        <td class="control-label" width='50' style="font-size:12pt">帳號:
+                                            <input type="hidden" name="account" id="account" value="<?php echo $row['account'];?>">
+                                        </td>
                                         <td width='400'>
                                             <input type="text" name="p_usr" id="p_usr" maxLength="12" disabled placeholder="<?php echo $row['account'];?>">
                                             <label for="p_user" class="error"></label>

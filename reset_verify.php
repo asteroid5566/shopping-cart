@@ -25,7 +25,7 @@ if ($result = mysqli_query($link, $sql)) {
         else {
             mysqli_free_result($result);
             mysqli_close($link);
-            echo "<script type='text/javascript'>alert('回答錯誤!".$row['answer']."');
+            echo "<script type='text/javascript'>alert('回答錯誤!');
             window.location.href='reset.php';
             </script>";
         }

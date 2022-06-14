@@ -9,15 +9,13 @@ $link = mysqli_connect("localhost", "root", "root123456", "group_07") or die("ç„
 mysqli_query($link, 'SET CHARACTER SET utf8');
 mysqli_query($link, "SET collation_connection = 'utf8_unicode_ci'");
 
-$account = $_SESSION['account'];
+$account = $_POST['account'];
 $pw = $_POST['pwd'];
 $name = $_POST["name"];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
 $question = $_POST['question'];
 $answer = $_POST['answer'];
-
-//$sql = 'UPDATE user SET "pw"="'.$_POST['pwd'].'","user_name"="'.$_POST['name'].'","email"="'.$_POST['email'].'","phone"="'.$_POST['phone'].'","question"="'.$_POST['question'].'","answer"="'.$_POST['answer'].'" WHERE "account" = "'.$_SESSION['account'].'"';
 
 $sql = "UPDATE user SET pw='$pw', user_name='$name', email='$email', phone='$phone', question='$question', answer='$answer' WHERE account = '$account'";
 

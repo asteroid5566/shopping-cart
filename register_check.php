@@ -1,8 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION['account']) || !isset($_GET["p_usr"])) {
-   header("Location:index.php");
-   exit();
+   if (!(isset($_SESSION['level']) && $_SESSION['level'] >= 9)) {
+      header("Location:index.php");
+      exit();
+   }
 }
 
 $user = trim($_GET["p_usr"]);

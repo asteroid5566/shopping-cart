@@ -243,3 +243,14 @@ pre {
     text-align: center;
     margin-bottom: 1px;
 }
+
+.admintb,
+.admintb tr,
+.admintb td {
+    padding: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-collapse: collapse;
+    border: solid 1px;
+    text-align: center;
+}

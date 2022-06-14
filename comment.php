@@ -13,7 +13,7 @@ $sql = "INSERT into comment (account, rate, time, content, isbn) values ('".$_PO
 
 if ($result = mysqli_query($link, $sql)) {
     echo "<script type='text/javascript'>alert('發送成功!');
-    window.location.href='products.php?id=".$_POST['isbn']."';
+    window.location.href='products.php?id=".$_POST['isbn']."#comment';
     </script>";
 }
 else {

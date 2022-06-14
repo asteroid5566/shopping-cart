@@ -1,4 +1,4 @@
-window.onscroll = function () { scrollFunction() }; //捲動20px顯示
+window.onscroll = function () { scrollFunction() };
 function scrollFunction() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
         document.getElementById("topbtn").style.display = "block";
@@ -7,7 +7,7 @@ function scrollFunction() {
     }
 }
 
-function topFunction() { //返回頂部
+function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }

@@ -87,7 +87,7 @@ if ($result = mysqli_query($link, 'SELECT * FROM book where isbn = ' . $_GET["id
                     if (isset($_SESSION['account'])) {
                         echo '
                         <div class="row">
-                            <div class="col-12 content">
+                            <div class="col-12 content" id="comment">
                                 <hr>
                                 <form id="form1" action="comment.php" method="POST">
                                     <table>
@@ -146,9 +146,13 @@ if ($result = mysqli_query($link, 'SELECT * FROM book where isbn = ' . $_GET["id
                         <hr>
                         <div class="col-12">
                             <h4>'.$row2['account'].'&nbsp;(評鑑分數:&nbsp;<span style="color:red;">'.$row2['rate'].'</span>)</h4>
-                            <br>
+                            <br>';
+                        if ($row2['content'] != "") {
+                            echo '
                             <h5 style="font-weight:normal;">&nbsp;&nbsp;&nbsp;&nbsp;'.$row2['content'].'</h5>
-                            <br>
+                            <br>';
+                        }
+                            echo '
                             <h6>於&nbsp;'.$row2['time'].'</h6>
                         </div>';
                     }
